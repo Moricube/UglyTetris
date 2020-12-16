@@ -94,7 +94,7 @@ namespace UglyTetris.GameLogic
             }
         }
 
-        public void MoveTile(int x, int y, int newX, int newY)
+        public (int, int) MoveTile(int x, int y, int newX, int newY)
         {
             var replacedTile = GetTile(newX, newY);
 
@@ -107,7 +107,7 @@ namespace UglyTetris.GameLogic
 
             if (movingTile == null)
             {
-                return;
+                return (-1, -1);
             }
             
             _tiles[newX, newY] = movingTile;
@@ -116,6 +116,8 @@ namespace UglyTetris.GameLogic
             RaiseTileChanged(
                 new TileXy() {Tile = movingTile, X = x, Y = y},
                 new TileXy(){Tile = movingTile, X = newX, Y = newY});
+
+            return (Math.Abs(newX - x), Math.Abs(newY - y));
         }
 
         public event EventHandler<TileChangedEventArgs> TileChanged;
@@ -232,5 +234,17 @@ namespace UglyTetris.GameLogic
         }
         
         private Tile[,] _tiles;
+    }
+
+    public class FieldMoveTileResult
+    {
+        public int xLength;
+        public int yLength;
+
+        public FieldMoveTileResult(int x, int y)
+        {
+            this.xLength = x;
+            this.yLength = y;
+        }
     }
 }
