@@ -5,9 +5,12 @@ namespace UglyTetris.GameLogic
 {
     public class Field
     {
-        public Field(Tile[,] initialTiles)
+        public Field(Tile[,] initialTiles, int marginFromLeft, int marginFromRight, int marginFromBottom)
         {
             _tiles = initialTiles;
+            leftBorder = _tiles.GetLowerBound(0) + marginFromLeft;
+            rightBorder = _tiles.GetUpperBound(0) - marginFromRight;
+            bottomBorder = _tiles.GetUpperBound(1) - marginFromBottom;
         }
         
         public static Field CreateField(int width, int height, string color)
@@ -25,7 +28,7 @@ namespace UglyTetris.GameLogic
                 tiles[i, height] = new Tile("DimGray");
             }
 
-            return new Field(tiles);
+            return new Field(tiles, 1, 1, 1);
         }
         
         public int Xmin => _tiles.GetLowerBound(0);
@@ -33,6 +36,10 @@ namespace UglyTetris.GameLogic
         public int Width => Xmax - Xmin;
         public int Ymin => _tiles.GetLowerBound(1);
         public int Ymax => _tiles.GetUpperBound(1);
+        
+        public int leftBorder;
+        public int rightBorder;
+        public int bottomBorder;
 
         public int Height => Ymax - Ymin;
 
@@ -94,7 +101,7 @@ namespace UglyTetris.GameLogic
             }
         }
 
-        public (int, int) MoveTile(int x, int y, int newX, int newY)
+        public void MoveTile(int x, int y, int newX, int newY)
         {
             var replacedTile = GetTile(newX, newY);
 
@@ -107,7 +114,7 @@ namespace UglyTetris.GameLogic
 
             if (movingTile == null)
             {
-                return (-1, -1);
+                return;
             }
             
             _tiles[newX, newY] = movingTile;
@@ -116,8 +123,6 @@ namespace UglyTetris.GameLogic
             RaiseTileChanged(
                 new TileXy() {Tile = movingTile, X = x, Y = y},
                 new TileXy(){Tile = movingTile, X = newX, Y = newY});
-
-            return (Math.Abs(newX - x), Math.Abs(newY - y));
         }
 
         public event EventHandler<TileChangedEventArgs> TileChanged;
@@ -134,14 +139,8 @@ namespace UglyTetris.GameLogic
         /// <returns>The number of removed lines</returns>
         public int RemoveFullLines() // !note that the old name 'CheckLines' was bad
         {
-            // this code assumes that the left and right columns and the bottom row 
-            // are the walls, and the game area is inside of it
-            
-            //todo better have specific methods for getting game area
-            // which can be extended in the future
-            
-            var left = Xmin + 1;
-            var right = Xmax - 1;
+            var left = leftBorder;
+            var right = rightBorder;
 
             var remove = 0;
 
@@ -184,15 +183,9 @@ namespace UglyTetris.GameLogic
         /// <returns></returns>
         public bool IsPossibleToPlaceFigure(Figure f, int figureX, int figureY)
         {
-            // this code assumes that the left and right columns and the bottom row 
-            // are the walls, and the game area is inside of it
-            
-            //todo better have specific methods for getting game area
-            // which can be extended in the future
-            
-            var left = Xmin + 1;
-            var right = Xmax - 1;
-            var bottom = Ymax - 1;
+            var left = leftBorder;
+            var right = rightBorder;
+            var bottom = bottomBorder;
 
             for (var i = f.Tiles.GetLowerBound(0); i <= f.Tiles.GetUpperBound(0); i++)
             {

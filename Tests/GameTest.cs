@@ -20,21 +20,22 @@ namespace Tests
             Tile TileF() => new Tile("Brown");
 
             game.Field = new Field(new Tile[,]
-            {
-                // 0 -> Y
-                // | 
-                // v X 
-                {TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {null, null, null, null, null, null, null, TileF(), },
-                {TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), },
-            });
+                {
+                    // 0 -> Y
+                    // | 
+                    // v X 
+                    {TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {null, null, null, null, null, null, null, TileF(), },
+                    {TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), },
+                }, 1, 1, 1
+            );
 
             var figureFactory = new FigureFactory();
 

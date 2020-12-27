@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -32,10 +33,19 @@ namespace WpfApp1
 
 
             _timer = new System.Windows.Threading.DispatcherTimer {Interval = TimeSpan.FromMilliseconds(10)};
-
             _timer.Tick += (sender, args) => { Game.Tick(); };
-
             _timer.Start();
+                
+            _spendTime = DateTime.Today;
+            TimeTextBlock.Text = _spendTime.ToLongTimeString();
+            
+            _timer2 = new System.Windows.Threading.DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
+            _timer2.Tick += (sender, args) =>
+            {
+                _spendTime = _spendTime.AddSeconds(1);
+                TimeTextBlock.Text = _spendTime.ToLongTimeString();
+            };
+            _timer2.Start();
         }
 
         private void GameOnStateChanged(object sender, EventArgs e)
@@ -43,6 +53,7 @@ namespace WpfApp1
             if (Game.State == GameState.GameOver)
             {
                 _timer.Stop();
+                _timer2.Stop();
                 MessageBox.Show("GAME OVER");
             }
         }
@@ -60,6 +71,8 @@ namespace WpfApp1
 
         public Game Game;
         private readonly System.Windows.Threading.DispatcherTimer _timer;
+        private readonly System.Windows.Threading.DispatcherTimer _timer2;
+        private DateTime _spendTime;
 
         private FieldDrawer _fieldDrawer;
         private FigureDrawer _figureDrawer;

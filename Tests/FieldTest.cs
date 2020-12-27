@@ -13,21 +13,22 @@ namespace Tests
         private static List<Field> Fields = new List<Field>()
         {
             new Field(new Tile[,]
-            {
-                // 0 -> Y
-                // | 
-                // v X 
-                {T(), T(), T(), T(), T(), T(), T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {null, null, null, null, null, null, T(), T(),},
-                {T(), T(), T(), T(), T(), T(), T(), T(),},
-            }),
+                {
+                    // 0 -> Y
+                    // | 
+                    // v X 
+                    {T(), T(), T(), T(), T(), T(), T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {null, null, null, null, null, null, T(), T(),},
+                    {T(), T(), T(), T(), T(), T(), T(), T(),},
+                }, 1, 1, 1
+            ),
             new Field(new Tile[,]
                 {
                     // 0 -> Y
@@ -43,7 +44,7 @@ namespace Tests
                     {null, null, null, null, T(), T(), T(), T(),},
                     {null, null, null, null, null, T(), T(), T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }
+                }, 1, 1, 1
             ),
             new Field(new Tile[,]
                 {
@@ -60,7 +61,7 @@ namespace Tests
                     {null, null, null, null, T(), T(), T(), T(),},
                     {null, null, null, null, null, T(), T(), T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }
+                }, 1, 1, 1
             ),
             new Field(new Tile[,]
                 {
@@ -77,7 +78,7 @@ namespace Tests
                     {null, null, null, null, null, null, null, T(),},
                     {null, null, null, null, null, null, null, T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }
+                }, 1, 1, 1
             ),
         };
 
@@ -91,109 +92,34 @@ namespace Tests
             var field = Fields[fieldIndex];
             field.RemoveFullLines().Should().Be(lineCount);
         }
-        
+
         [Theory]
-        [InlineData(2, 3, 2, 2)]
-        [InlineData(2, 3, 2, 4)]
-        public void CheckTileMove0(int x, int y, int newX, int newY)
+        [InlineData(12, 24)]
+        [InlineData(15, 27)]
+        public void CreateField(int width, int height)
         {
-            var field = new Field(new Tile[,]
-                {
-                    // 0 -> Y
-                    // | 
-                    // v X 
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, T(), null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }
-            );
-            
-            field.MoveTile(x, y, newX, newY).Should().Be((0, 1));
-        }
-        
-        [Theory]
-        [InlineData(2, 3, 3, 2)]
-        [InlineData(2, 3, 1, 4)]
-        public void CheckTileMove45(int x, int y, int newX, int newY)
-        {
-            var field = new Field(new Tile[,]
-                {
-                    // 0 -> Y
-                    // | 
-                    // v X 
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, T(), null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }
-            );
-            
-            field.MoveTile(x, y, newX, newY).Should().Be((1, 1));
-        }
-        
-        [Theory] 
-        [InlineData(2, 3, 3, 3)]
-        [InlineData(2, 3, 1, 3)]
-        public void CheckTileMove90(int x, int y, int newX, int newY)
-        {
-            var field = new Field(new Tile[,]
-                {
-                    // 0 -> Y
-                    // | 
-                    // v X 
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, T(), null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }
-            );
-            
-            field.MoveTile(x, y, newX, newY).Should().Be((1, 0));
+            var field = Field.CreateField(width, height, "DimGray");
+            field.Width.Should().Be(width + 1);
+            field.Height.Should().Be(height);
         }
 
         [Theory]
-        [InlineData(2, 3, 1, 2)]
-        [InlineData(2, 3, 3, 4)]
-        public void CheckTileMove135(int x, int y, int newX, int newY)
+        [InlineData(0, 1, 3)]
+        [InlineData(0, 2, 4)]
+        [InlineData(0, 3, 5)]
+        public void IsInBounds(int fieldIndex, int x, int y)
         {
-            var field = new Field(new Tile[,]
-                {
-                    // 0 -> Y
-                    // | 
-                    // v X 
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, T(), null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
-                    {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }
-            );
-            
-            field.MoveTile(x, y, newX, newY).Should().Be((1, 1));
+            var field = Fields[fieldIndex];
+            field.IsInBounds(x, y).Should().Be(true);
+        }
+        
+        [Theory]
+        [InlineData(0, 0, 15)]
+        [InlineData(0, -1, 3)]
+        public void IsNotInBounds(int fieldIndex, int x, int y)
+        {
+            var field = Fields[fieldIndex];
+            field.IsInBounds(x, y).Should().Be(false);
         }
     }
 }
