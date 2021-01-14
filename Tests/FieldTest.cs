@@ -27,7 +27,7 @@ namespace Tests
                     {null, null, null, null, null, null, T(), T(),},
                     {null, null, null, null, null, null, T(), T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }, 1, 1, 1
+                }, 1, 1
             ),
             new Field(new Tile[,]
                 {
@@ -44,7 +44,7 @@ namespace Tests
                     {null, null, null, null, T(), T(), T(), T(),},
                     {null, null, null, null, null, T(), T(), T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }, 1, 1, 1
+                }, 1, 1
             ),
             new Field(new Tile[,]
                 {
@@ -61,7 +61,7 @@ namespace Tests
                     {null, null, null, null, T(), T(), T(), T(),},
                     {null, null, null, null, null, T(), T(), T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }, 1, 1, 1
+                }, 1, 1
             ),
             new Field(new Tile[,]
                 {
@@ -78,7 +78,7 @@ namespace Tests
                     {null, null, null, null, null, null, null, T(),},
                     {null, null, null, null, null, null, null, T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
-                }, 1, 1, 1
+                }, 1, 1
             ),
         };
 
