@@ -5,12 +5,12 @@ namespace UglyTetris.GameLogic
 {
     public class Field
     {
-        public Field(Tile[,] initialTiles, int marginFromLeft, int marginFromRight, int marginFromBottom)
+        public Field(Tile[,] initialTiles, int marginFromLeft, int marginFromRight)
         {
             _tiles = initialTiles;
             leftBorder = _tiles.GetLowerBound(0) + marginFromLeft;
             rightBorder = _tiles.GetUpperBound(0) - marginFromRight;
-            bottomBorder = _tiles.GetUpperBound(1) - marginFromBottom;
+            bottomBorder = _tiles.GetUpperBound(1) - 1;
         }
         
         public static Field CreateField(int width, int height, string color)
@@ -28,7 +28,7 @@ namespace UglyTetris.GameLogic
                 tiles[i, height] = new Tile("DimGray");
             }
 
-            return new Field(tiles, 1, 1, 1);
+            return new Field(tiles, 1, 1);
         }
         
         public int Xmin => _tiles.GetLowerBound(0);

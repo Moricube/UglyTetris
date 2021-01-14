@@ -34,7 +34,7 @@ namespace Tests
                     {null, null, null, null, null, null, null, TileF(), },
                     {null, null, null, null, null, null, null, TileF(), },
                     {TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), TileF(), },
-                }, 1, 1, 1
+                }, 1, 1
             );
 
             var figureFactory = new FigureFactory();
