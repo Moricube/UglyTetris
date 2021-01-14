@@ -90,7 +90,7 @@ namespace WpfApp1
             Game.MoveRight();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LeftArrowBtnPress(object sender, RoutedEventArgs e)
         {
             MoveLeft();
         }
@@ -141,21 +141,21 @@ namespace WpfApp1
                 Drop();
             }
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void TopArrowBtnPress(object sender, RoutedEventArgs e)
         {
             RotateAntiClockWise();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void BottomArrowBtnPress(object sender, RoutedEventArgs e)
         {
             RotateClockWise();
         }
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void RightArrowBtnPress(object sender, RoutedEventArgs e)
         {
             MoveRight();
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void SpaceBtnPress(object sender, RoutedEventArgs e)
         {
             Drop();
         }
