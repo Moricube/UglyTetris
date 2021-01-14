@@ -75,7 +75,7 @@ namespace Tests
                     {null, null, null, null, null, null, null, T(),},
                     {null, null, null, null, null, null, null, T(),},
                     {null, null, null, null, null, null, null, T(),},
-                    {null, null, null, null, null, null, null, T(),},
+                    {null, null, null, null, null, T(), null, T(),},
                     {null, null, null, null, null, null, null, T(),},
                     {T(), T(), T(), T(), T(), T(), T(), T(),},
                 }, 1, 1
@@ -120,6 +120,24 @@ namespace Tests
         {
             var field = Fields[fieldIndex];
             field.IsInBounds(x, y).Should().Be(false);
+        }
+        
+        [Theory]
+        [InlineData(3, 2, 3)]
+        [InlineData(3, 7, 5)]
+        public void IsNotEmpty(int fieldIndex, int x, int y)
+        {
+            var field = Fields[fieldIndex];
+            field.IsEmpty(x, y).Should().Be(false);
+        }
+        
+        [Theory]
+        [InlineData(3, 3, 3)]
+        [InlineData(3, 7, 4)]
+        public void IsEmpty(int fieldIndex, int x, int y)
+        {
+            var field = Fields[fieldIndex];
+            field.IsEmpty(x, y).Should().Be(true);
         }
     }
 }
