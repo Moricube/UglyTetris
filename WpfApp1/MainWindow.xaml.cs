@@ -36,16 +36,16 @@ namespace WpfApp1
             _timer.Tick += (sender, args) => { Game.Tick(); };
             _timer.Start();
                 
-            _spendTime = DateTime.Today;
-            TimeTextBlock.Text = _spendTime.ToLongTimeString();
+            _userGameSessionSpendTime = new TimeSpan(0, 0, 0);
+            TimeTextBlock.Text = _userGameSessionSpendTime.ToString("hh\\:mm\\:ss");
             
-            _timer2 = new System.Windows.Threading.DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
-            _timer2.Tick += (sender, args) =>
+            _userGameSessionTimer = new System.Windows.Threading.DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
+            _userGameSessionTimer.Tick += (sender, args) =>
             {
-                _spendTime = _spendTime.AddSeconds(1);
-                TimeTextBlock.Text = _spendTime.ToLongTimeString();
+                _userGameSessionSpendTime = _userGameSessionSpendTime.Add(new TimeSpan(0, 0, 1));
+                TimeTextBlock.Text = _userGameSessionSpendTime.ToString("hh\\:mm\\:ss");
             };
-            _timer2.Start();
+            _userGameSessionTimer.Start();
         }
 
         private void GameOnStateChanged(object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace WpfApp1
             if (Game.State == GameState.GameOver)
             {
                 _timer.Stop();
-                _timer2.Stop();
+                _userGameSessionTimer.Stop();
                 MessageBox.Show("GAME OVER");
             }
         }
@@ -71,8 +71,8 @@ namespace WpfApp1
 
         public Game Game;
         private readonly System.Windows.Threading.DispatcherTimer _timer;
-        private readonly System.Windows.Threading.DispatcherTimer _timer2;
-        private DateTime _spendTime;
+        private readonly System.Windows.Threading.DispatcherTimer _userGameSessionTimer;
+        private TimeSpan _userGameSessionSpendTime;
 
         private FieldDrawer _fieldDrawer;
         private FigureDrawer _figureDrawer;
