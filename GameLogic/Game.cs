@@ -16,7 +16,16 @@ namespace UglyTetris.GameLogic
         int MoveDownPeriodTicks { get; } = 50;
 
         private int FallDownPeriodTicks { get; } = 3;
+        private TimeSpan _spendedTime = new TimeSpan(0, 0, 0);
 
+        public string GetSpendedTime()
+        {
+            return _spendedTime.ToString("hh\\:mm\\:ss");
+        }
+        public void AddSecondToTimer()
+        {
+            _spendedTime = _spendedTime.Add(new TimeSpan(0, 0, 1));
+        }
 
         private int _lines = 0;
         public int Lines
@@ -39,6 +48,17 @@ namespace UglyTetris.GameLogic
                 _state = value;
                 StateChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        public void PauseGame()
+        {
+            State = GameState.Pause;
+        }
+        
+        public void UnpauseGame()
+        {
+            State = GameState.Unpause;
+            State = GameState.Running;
         }
 
         public void Tick()
@@ -150,8 +170,6 @@ namespace UglyTetris.GameLogic
         public event EventHandler LinesChanged; // may be replaced with INotifyPropertyChanged interface implementation
         
         public event EventHandler StateChanged; // may be replaced with INotifyPropertyChanged interface implementation
-
-        
 
         public int FigurePositionX { get; private set; } = 6;
 

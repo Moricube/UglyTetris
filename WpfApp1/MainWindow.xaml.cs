@@ -36,20 +36,31 @@ namespace WpfApp1
             _timer.Tick += (sender, args) => { Game.Tick(); };
             _timer.Start();
                 
-            _userGameSessionSpendTime = new TimeSpan(0, 0, 0);
-            TimeTextBlock.Text = _userGameSessionSpendTime.ToString("hh\\:mm\\:ss");
+            TimeTextBlock.Text = Game.GetSpendedTime();
             
             _userGameSessionTimer = new System.Windows.Threading.DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
             _userGameSessionTimer.Tick += (sender, args) =>
             {
-                _userGameSessionSpendTime = _userGameSessionSpendTime.Add(new TimeSpan(0, 0, 1));
-                TimeTextBlock.Text = _userGameSessionSpendTime.ToString("hh\\:mm\\:ss");
+                Game.AddSecondToTimer();
+                TimeTextBlock.Text = Game.GetSpendedTime();
             };
             _userGameSessionTimer.Start();
         }
 
         private void GameOnStateChanged(object sender, EventArgs e)
         {
+            if (Game.State == GameState.Unpause)
+            {
+                _timer.Start();
+                _userGameSessionTimer.Start();
+            }
+            
+            if (Game.State == GameState.Pause)
+            {
+                _timer.Stop();
+                _userGameSessionTimer.Stop();
+            }
+            
             if (Game.State == GameState.GameOver)
             {
                 _timer.Stop();
@@ -114,6 +125,20 @@ namespace WpfApp1
             if (e.IsRepeat)
             {
                 return;
+            }
+
+            if (e.Key == Key.P)
+            {
+                if (Game.State == GameState.Running)
+                {
+                    Game.PauseGame();
+                    return;
+                }
+                if (Game.State == GameState.Pause)
+                {
+                    Game.UnpauseGame();
+                    return;
+                }
             }
 
             if (e.Key == Key.Left)
