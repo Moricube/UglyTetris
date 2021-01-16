@@ -37,9 +37,9 @@ namespace UglyTetris.GameLogic
         public int Ymin => _tiles.GetLowerBound(1);
         public int Ymax => _tiles.GetUpperBound(1);
         
-        public int leftBorder;
-        public int rightBorder;
-        public int bottomBorder;
+        private int leftBorder;
+        private int rightBorder;
+        private int bottomBorder;
 
         public int Height => Ymax - Ymin;
 

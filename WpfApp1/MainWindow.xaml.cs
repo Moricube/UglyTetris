@@ -76,10 +76,7 @@ namespace WpfApp1
 
         private FieldDrawer _fieldDrawer;
         private FigureDrawer _figureDrawer;
-
         
-        
-
         private void MoveLeft()
         {
             Game.MoveLeft();
