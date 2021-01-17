@@ -79,6 +79,11 @@ namespace Tests
             {
                 return new Figure();
             }
+
+            public Figure GetFigureFromNext()
+            {
+                return new Figure();
+            }
         }
     }
 }
