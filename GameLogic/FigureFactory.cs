@@ -89,12 +89,14 @@ namespace UglyTetris.GameLogic
             return CreateStandardFigure((FigureType) randomType);
         }
         
-        public void CreateNextFigure()
+        public Figure CreateNextFigure()
         {
             var r = new Random();
             var randomType = r.Next(0, Enum.GetNames(typeof(FigureType)).Length);
 
             _nextFigure = CreateStandardFigure((FigureType) randomType);
+
+            return _nextFigure;
         }
 
         public Figure GetFigureFromNext()
