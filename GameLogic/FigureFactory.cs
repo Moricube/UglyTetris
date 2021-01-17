@@ -9,12 +9,13 @@ namespace UglyTetris.GameLogic
 
     public class FigureFactory
     {
+        private Figure _nextFigure;
+        
         public Figure CreateStandardFigure(FigureType figureType)
         {
             string tiles = "";
             var nl = Environment.NewLine;
             string color;
-
 
             switch (figureType)
             {
@@ -83,9 +84,22 @@ namespace UglyTetris.GameLogic
         public Figure CreateRandomFigure()
         {
             var r = new Random();
-            var randomType = r.Next(0, 7); // code smell
+            var randomType = r.Next(0, Enum.GetNames(typeof(FigureType)).Length);
 
             return CreateStandardFigure((FigureType) randomType);
+        }
+        
+        public void CreateNextFigure()
+        {
+            var r = new Random();
+            var randomType = r.Next(0, Enum.GetNames(typeof(FigureType)).Length);
+
+            _nextFigure = CreateStandardFigure((FigureType) randomType);
+        }
+
+        public Figure GetFigureFromNext()
+        {
+            return _nextFigure;
         }
     }
 }

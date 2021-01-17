@@ -19,6 +19,7 @@ namespace WpfApp1
             
             _figureDrawer = new FigureDrawer(new TileDrawer(MainCanvas));
             _fieldDrawer = new FieldDrawer(new TileDrawer(MainCanvas));
+            _nextFigureDrawer = new FigureDrawer(new TileDrawer(NextFigureCanvas));
 
             Game = new Game(new RandomNextFigureFactory());
             Game.FigureStateChanged += GameOnFigureStateChanged;
@@ -26,9 +27,11 @@ namespace WpfApp1
             Game.StateChanged += GameOnStateChanged;
             
             Game.Field = Field.CreateField(FieldHelper.FieldDefaultWidth, FieldHelper.FieldDefaultHeight, "DimGray");
-            Game.ResetFigure(_figureFactory.CreateRandomFigure());
+            _figureFactory.CreateNextFigure();
+            Game.ResetFigure(_figureFactory.GetFigureFromNext());
 
             _figureDrawer.DrawFigure(Game.Figure, Game.FigurePositionX, Game.FigurePositionY);
+            _nextFigureDrawer.DrawFigure(Game.GetFigureFromNext(), 0, 0);
             _fieldDrawer.AttachToField(Game.Field);
 
 
@@ -77,6 +80,7 @@ namespace WpfApp1
         private void GameOnFigureStateChanged(object sender, EventArgs e)
         {
             _figureDrawer.DrawFigure(Game.Figure, Game.FigurePositionX, Game.FigurePositionY);
+            _nextFigureDrawer.DrawFigure(Game.GetFigureFromNext(), 0, 0);
         }
 
 
@@ -87,6 +91,7 @@ namespace WpfApp1
 
         private FieldDrawer _fieldDrawer;
         private FigureDrawer _figureDrawer;
+        private FigureDrawer _nextFigureDrawer;
         
         private void MoveLeft()
         {
@@ -185,9 +190,23 @@ namespace WpfApp1
 
     internal class RandomNextFigureFactory : INextFigureFactory
     {
+        public RandomNextFigureFactory()
+        {
+            _figureFactory.CreateNextFigure();
+        }
+        
         public Figure GetNextFigure()
         {
-            return _figureFactory.CreateRandomFigure();
+            var resultFigure = _figureFactory.GetFigureFromNext();
+            
+            _figureFactory.CreateNextFigure();
+
+            return resultFigure;
+        }
+        
+        public Figure GetFigureFromNext()
+        {
+            return _figureFactory.GetFigureFromNext();
         }
 
         readonly FigureFactory _figureFactory = new FigureFactory();

@@ -18,6 +18,11 @@ namespace UglyTetris.GameLogic
         private int FallDownPeriodTicks { get; } = 3;
         private TimeSpan _spendedTime = new TimeSpan(0, 0, 0);
 
+        public Figure GetFigureFromNext()
+        {
+            return _nextFigureFactory.GetFigureFromNext();
+        }
+
         public string GetSpendedTime()
         {
             return _spendedTime.ToString("hh\\:mm\\:ss");
