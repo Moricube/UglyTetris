@@ -1,3 +1,4 @@
+using System.Security.Policy;
 using FluentAssertions;
 using UglyTetris.GameLogic;
 using Xunit;
@@ -71,6 +72,27 @@ namespace Tests
             game.RotateAntiClockWise();
             
             game.Figure.Should().BeEquivalentTo(figureAtLeftWallCopy);
+        }
+        
+        [Fact]
+        public void PauseGame()
+        {
+            var game = new Game(new NextFigureFactoryStub());
+
+            game.PauseGame();
+            
+            game.State.Should().Be(GameState.Pause);
+        }
+        
+        [Fact]
+        public void UnpauseGame()
+        {
+            var game = new Game(new NextFigureFactoryStub());
+
+            game.PauseGame();
+            game.UnpauseGame();
+            
+            game.State.Should().Be(GameState.Running);
         }
         
         private class NextFigureFactoryStub : INextFigureFactory
