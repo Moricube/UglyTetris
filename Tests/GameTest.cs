@@ -96,7 +96,7 @@ namespace Tests
         }
 
         private class NextFigureFactoryStub : INextFigureFactory
-        {CreateNextFigure
+        {
             public Figure GetNextFigure()
             {
                 return new Figure();
