@@ -94,6 +94,26 @@ namespace Tests
             
             game.State.Should().Be(GameState.Running);
         }
+        
+        [Fact]
+        public void CheckGameStateOnPause()
+        {
+            var game = new Game(new NextFigureFactoryStub());
+
+            game.PauseGame();
+
+            var oldTime = game.getGameTimerValue();
+
+            game.gameTimerTick();
+            game.gameTimerTick();
+            game.gameTimerTick();
+            game.gameTimerTick();
+            game.gameTimerTick();
+
+            var newTime = game.getGameTimerValue();
+
+            newTime.Should().Be(oldTime);
+        }
 
         private class NextFigureFactoryStub : INextFigureFactory
         {

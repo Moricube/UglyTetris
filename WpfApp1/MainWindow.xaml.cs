@@ -39,13 +39,13 @@ namespace WpfApp1
             _timer.Tick += (sender, args) => { Game.Tick(); };
             _timer.Start();
                 
-            TimeTextBlock.Text = Game.GetSpendedTime();
+            TimeTextBlock.Text = Game.getGameTimerValue().ToString("hh\\:mm\\:ss");
             
             _userGameSessionTimer = new System.Windows.Threading.DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
             _userGameSessionTimer.Tick += (sender, args) =>
             {
-                Game.AddSecondToTimer();
-                TimeTextBlock.Text = Game.GetSpendedTime();
+                Game.gameTimerTick();
+                TimeTextBlock.Text = Game.getGameTimerValue().ToString("hh\\:mm\\:ss");
             };
             _userGameSessionTimer.Start();
         }

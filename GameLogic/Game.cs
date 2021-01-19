@@ -16,20 +16,20 @@ namespace UglyTetris.GameLogic
         int MoveDownPeriodTicks { get; } = 50;
 
         private int FallDownPeriodTicks { get; } = 3;
-        private TimeSpan _spendedTime = new TimeSpan(0, 0, 0);
+        private TimeSpan _gameTimer = new TimeSpan(0, 0, 0);
 
         public Figure GetFigureFromNext()
         {
             return _nextFigureFactory.GetFigureFromNext();
         }
 
-        public string GetSpendedTime()
+        public TimeSpan getGameTimerValue()
         {
-            return _spendedTime.ToString("hh\\:mm\\:ss");
+            return _gameTimer;
         }
-        public void AddSecondToTimer()
+        public void gameTimerTick()
         {
-            _spendedTime = _spendedTime.Add(new TimeSpan(0, 0, 1));
+            _gameTimer = _gameTimer.Add(new TimeSpan(0, 0, 1));
         }
 
         private int _lines = 0;
