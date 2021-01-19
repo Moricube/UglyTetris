@@ -156,7 +156,7 @@ namespace UglyTetris.AvaloniaGUI
 
     internal class RandomNextFigureFactory : INextFigureFactory
     {
-        public Figure GetNextFigure()
+        public Figure GetRandomFigure()
         {
             return _figureFactory.CreateRandomFigure();
         }

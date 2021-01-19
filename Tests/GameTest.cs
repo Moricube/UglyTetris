@@ -102,27 +102,22 @@ namespace Tests
 
             game.PauseGame();
 
-            var oldTime = game.getGameTimerValue();
+            var oldTime = game.GetGameTimerValue();
 
-            game.gameTimerTick();
-            game.gameTimerTick();
-            game.gameTimerTick();
-            game.gameTimerTick();
-            game.gameTimerTick();
+            game.GameTimerTick();
+            game.GameTimerTick();
+            game.GameTimerTick();
+            game.GameTimerTick();
+            game.GameTimerTick();
 
-            var newTime = game.getGameTimerValue();
+            var newTime = game.GetGameTimerValue();
 
             newTime.Should().Be(oldTime);
         }
 
         private class NextFigureFactoryStub : INextFigureFactory
         {
-            public Figure GetNextFigure()
-            {
-                return new Figure();
-            }
-
-            public Figure GetFigureFromNext()
+            public Figure GetRandomFigure()
             {
                 return new Figure();
             }

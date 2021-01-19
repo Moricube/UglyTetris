@@ -27,11 +27,10 @@ namespace WpfApp1
             Game.StateChanged += GameOnStateChanged;
             
             Game.Field = Field.CreateField(FieldHelper.FieldDefaultWidth, FieldHelper.FieldDefaultHeight, "DimGray");
-            _figureFactory.CreateNextFigure();
-            Game.ResetFigure(_figureFactory.GetFigureFromNext());
+            Game.ResetFigure(Game.GetCurrentFigureValue());
 
             _figureDrawer.DrawFigure(Game.Figure, Game.FigurePositionX, Game.FigurePositionY);
-            _nextFigureDrawer.DrawFigure(Game.GetFigureFromNext(), 0, 0);
+            _nextFigureDrawer.DrawFigure(Game.GetNextFigureValue(), 0, 0);
             _fieldDrawer.AttachToField(Game.Field);
 
 
@@ -39,13 +38,13 @@ namespace WpfApp1
             _timer.Tick += (sender, args) => { Game.Tick(); };
             _timer.Start();
                 
-            TimeTextBlock.Text = Game.getGameTimerValue().ToString("hh\\:mm\\:ss");
+            TimeTextBlock.Text = Game.GetGameTimerValue().ToString("hh\\:mm\\:ss");
             
             _userGameSessionTimer = new System.Windows.Threading.DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
             _userGameSessionTimer.Tick += (sender, args) =>
             {
-                Game.gameTimerTick();
-                TimeTextBlock.Text = Game.getGameTimerValue().ToString("hh\\:mm\\:ss");
+                Game.GameTimerTick();
+                TimeTextBlock.Text = Game.GetGameTimerValue().ToString("hh\\:mm\\:ss");
             };
             _userGameSessionTimer.Start();
         }
@@ -80,7 +79,7 @@ namespace WpfApp1
         private void GameOnFigureStateChanged(object sender, EventArgs e)
         {
             _figureDrawer.DrawFigure(Game.Figure, Game.FigurePositionX, Game.FigurePositionY);
-            _nextFigureDrawer.DrawFigure(Game.GetFigureFromNext(), 0, 0);
+            _nextFigureDrawer.DrawFigure(Game.GetNextFigureValue(), 0, 0);
         }
 
 
@@ -190,23 +189,9 @@ namespace WpfApp1
 
     internal class RandomNextFigureFactory : INextFigureFactory
     {
-        public RandomNextFigureFactory()
+        public Figure GetRandomFigure()
         {
-            _figureFactory.CreateNextFigure();
-        }
-        
-        public Figure GetNextFigure()
-        {
-            var resultFigure = _figureFactory.GetFigureFromNext();
-            
-            _figureFactory.CreateNextFigure();
-
-            return resultFigure;
-        }
-        
-        public Figure GetFigureFromNext()
-        {
-            return _figureFactory.GetFigureFromNext();
+            return _figureFactory.CreateRandomFigure();
         }
 
         readonly FigureFactory _figureFactory = new FigureFactory();

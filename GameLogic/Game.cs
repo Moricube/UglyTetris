@@ -7,29 +7,50 @@ namespace UglyTetris.GameLogic
         public Game(INextFigureFactory nextFigureFactory)
         {
             _nextFigureFactory = nextFigureFactory;
+            _currentFigure = _nextFigureFactory.GetRandomFigure();
+            _nextFigure = _nextFigureFactory.GetRandomFigure();
         }
         
         public bool IsFalling { get; set; }
 
         private int _tickCount = 0;
-
+        private Figure _currentFigure;
+        private Figure _nextFigure;
+        
         int MoveDownPeriodTicks { get; } = 50;
 
         private int FallDownPeriodTicks { get; } = 3;
         private TimeSpan _gameTimer = new TimeSpan(0, 0, 0);
 
-        public Figure GetFigureFromNext()
+        public Figure GetNextFigure()
         {
-            return _nextFigureFactory.GetFigureFromNext();
+            _currentFigure = _nextFigure;
+
+            _nextFigure = _nextFigureFactory.GetRandomFigure();
+            
+            return _currentFigure;
         }
 
-        public TimeSpan getGameTimerValue()
+        public Figure GetCurrentFigureValue()
+        {
+            return _currentFigure;
+        }
+        
+        public Figure GetNextFigureValue()
+        {
+            return _nextFigure;
+        }
+
+        public TimeSpan GetGameTimerValue()
         {
             return _gameTimer;
         }
-        public void gameTimerTick()
+        public void GameTimerTick()
         {
-            _gameTimer = _gameTimer.Add(new TimeSpan(0, 0, 1));
+            if (State == GameState.Running)
+            {
+                _gameTimer = _gameTimer.Add(new TimeSpan(0, 0, 1));   
+            }
         }
 
         private int _lines = 0;
@@ -94,7 +115,7 @@ namespace UglyTetris.GameLogic
 
                     RaiseFigureStateChanged();
 
-                    var figure = _nextFigureFactory.GetNextFigure();
+                    var figure = GetNextFigure();
 
                     if (!ResetFigure(figure))
                     {
