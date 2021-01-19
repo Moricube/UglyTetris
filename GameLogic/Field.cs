@@ -183,10 +183,6 @@ namespace UglyTetris.GameLogic
         /// <returns></returns>
         public bool IsPossibleToPlaceFigure(Figure f, int figureX, int figureY)
         {
-            var left = leftBorder;
-            var right = rightBorder;
-            var bottom = bottomBorder;
-
             for (var i = f.Tiles.GetLowerBound(0); i <= f.Tiles.GetUpperBound(0); i++)
             {
                 for (var j = f.Tiles.GetLowerBound(1); j <= f.Tiles.GetUpperBound(1); j++)
