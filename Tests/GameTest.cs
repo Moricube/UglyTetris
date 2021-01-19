@@ -95,17 +95,8 @@ namespace Tests
             game.State.Should().Be(GameState.Running);
         }
 
-        [Fact]
-        public void CheckNextFigure()
-        {
-            var figureFactory = new FigureFactory();
-
-            var nextFigure = figureFactory.CreateNextFigure();
-            figureFactory.GetFigureFromNext().Should().Be(nextFigure);
-        }
-        
         private class NextFigureFactoryStub : INextFigureFactory
-        {
+        {CreateNextFigure
             public Figure GetNextFigure()
             {
                 return new Figure();
